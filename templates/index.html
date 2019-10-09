@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+{% extends "bootstrap/base.html" %}
+{% block title %}Analisis de datos Twitter{% endblock %}
+{% block content %}
+    <div class="container">
+        <form action="/hola" method="GET">
+            <div class="col-md-8 col-md-offset-2">
+                <div >
+                    <h1><p class="text-primary">Api Twitter: Analisis de datos de usuarios</p></h1>
+                </div>
+                <div class="form-group">
+                <label for="username">Username: </label>
+                    <input class="form-control" type="text" id="username" name="respuesta1" placeholder="@Example" required/><br>
+                </div>
+                <div class="spinner-border text-primary" role="status">
+                    <input class="btn btn-primary" type="submit" id="send-signup" name="signup" value="Analizar" />
+                    {% if m == 'GET' %}
+                    <h1 id="he">usuario: {{r}}</h1>
+                    <h2>seguidores: {{f}}</h1>
+                      {% for i in range(20) %}
+                      <p>likes publiccacion {{i+1}}: {{t[i].favorite_count}}  </p>
+                      <p>efectividad: {{"{0:.5f}".format(t[i].favorite_count/f)}}%  </p>
+
+                      {% endfor %}
+                    {% endif %}
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </form>
+    </div>
+
+     
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}
+
+
+</body>
+</html>
+
+
+

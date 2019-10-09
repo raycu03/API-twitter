@@ -1,3 +1,6 @@
+from flask import Flask, render_template
+from flask import request
+from flask_bootstrap import Bootstrap
 import tweepy
 
 consumer_key=""
@@ -9,14 +12,20 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth)
+app = Flask(__name__)
+Bootstrap(app)
 
-user = api.get_user(id="usuario")
-print ("usuario: ",user.screen_name)
-print ("segidores: ",user.followers_count)
-#numero de publicaciones
-print ("publicaciones: ",user.statuses_count)
-#print ("likes: ", user.favourites_count)
 
-public_tweets = api.user_timeline(id="usuario")
-for i in range(len(public_tweets)):
-  print("likes publiccacion",i+1,public_tweets[i].favorite_count)
+@app.route('/')
+def index():
+    return render_template('index.html')
+@app.route('/hola',methods=['GET', 'POST'])	
+def hola():
+  respuesta1 = request.args.get('respuesta1')
+  user = api.get_user(id=respuesta1)
+
+  public_tweets = api.user_timeline(id=respuesta1)
+  return render_template('index.html', m = request.method, r = user.screen_name,f=user.followers_count,t=public_tweets)
+
+if __name__ == '__main__':
+    app.run(debug=True, host="0.0.0.0")
