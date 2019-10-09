@@ -28,4 +28,4 @@ def hola():
   return render_template('index.html', m = request.method, r = user.screen_name,f=user.followers_count,t=public_tweets)
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True)
